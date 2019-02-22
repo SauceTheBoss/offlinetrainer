@@ -7,10 +7,10 @@ from ValuesDataset import ValuesDataset, CreateSubSet, TrainingSubset
 from modelset import ModelSet
 from tensorboardX import SummaryWriter
 
-frame_file = '../Saltie/framedata/gooddata0.pt'
+frame_file = 'gooddata0.pt'
 state_file = "./state.pt"
 
-device = "cpu" #torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 workers = 0 #(4 if device == "cpu" else 0)
 writer = SummaryWriter()
 DEBUG_QUICK = False
@@ -23,6 +23,7 @@ class PremotorCortex():
 
 		self.batch_count = 20000 #(100 if DEBUG_QUICK else 20000)				#10000 frames is aprox a full games worth (including overtime at 30fps)
 		self.train_batchsize = (100 if DEBUG_QUICK else 500)
+		print("device")
 		return
 
 	def cacheData(self):
