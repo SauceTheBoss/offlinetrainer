@@ -1,0 +1,43 @@
+### TODO
+    - save and load
+    - logging and tensorboard
+    - azure integration
+
+- dataset --> subset class
+    - remove values defined by a mask from the dataset
+
+- need a function for the modelset that defines "coverage"
+    - input: sample batches, "thresholds" for creator, thresholds for selector
+    - output: mask of samples that meet thresholds
+    
+- hopper - purpose is to train and promote new modelsets (creator and selector) classifiers that show accurate results with consistency
+    - Add modelsets until the population of the hopper is N
+        * [let N be 10 for now. change depending on resources/time/performance-of-system]
+
+    - [train] for each modelset in the hopper
+        - get two list: where the model's creator was the best out of all modelsets currently in the hopper, and where it was the worse
+            * [we may want to drop modelsets that have less than 0.1% of the total sample size on the "best" list]
+        - create two subset datasets from each list
+            - train the creator AND the selector on the "best list"
+            - train just the selector (with negative reinforcement) on the "worst" list
+            * [alternative training between the two lists] 
+                * [lists will not be equal]
+                    - set the batch size for each to be Min(200, len(goodlist), len(badlast))
+                - loop through each list (sub)sampleset AT LEAST 5 times
+
+    - [evaluate] for each modelsets in the hopper
+        - identify samples in the training set that the modelset can meet the thresholds for the creator's loss and selector pct
+            * [thresholds for creator loss is < 0.001, selector pct is > 0.999.  This could be given a wider range if training is difficult.]
+        - add identified samples to the previous evaluation array
+            - multiply everything by the new array (which should be either 1 or 0) to reset the count to 0 if it does not match anymore
+            - then add the current array to previous, increasing previous found items by 1
+
+    - [do promotion] once the tracked array for a modelset has at least 1(*) sample frame-pair with at least 10(*) consecutive successes in evaluation
+        * [10 consecutive success was decided because 0.5^[10] < 0.001 (99.9%)]
+        * [start off with "at least 1 sample frame-pair", and increase if that number is too low and we get a lot of promoted "specialized" modelsets]
+        - move the modelset from the hopper collection to the production collection
+        - remove the sample frame-pairs (that is now classified by the modelset) from the sample collection that is used in the hopper
+
+    - repeat until 100% coverage
+
+[may need to reevaluate the promoted modelsets in the collection and find "overlaps".  If significant, redo hopper on the overlap samples.] 

@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "C:\\Users\\EricE\\AppData\\Local\\conda\\conda\\envs\\pytorch\\python.exe",
+    "python.linting.pylintArgs": [
+        "--errors-only",
+        "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*",
+        "--ignored-modules=numpy,torch"
+        ],
+    "python.linting.pylintEnabled": false,
+    "editor.tabSize": 4
+}

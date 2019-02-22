@@ -1,0 +1,10 @@
+Get a stable 2-category system
+    - if starting models are clones from the same origin, then the first run should be a 50/50 split between both
+        - currently, it is not... need to add SMALL noise to break up ties
+    - "good"/"bad" list for training should only be based on creator loss
+    - training should be done for both selector and creator
+    - this should loop until... (not sure, ideas below)
+        - avg selector pct is within a range of each other?
+        - avg creator loss is within a range of each other?
+        - both?
+        - may want to run this for 100x iterations to find lowest range
