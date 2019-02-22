@@ -23,7 +23,7 @@ class PremotorCortex():
 
 		self.batch_count = 20000 #(100 if DEBUG_QUICK else 20000)				#10000 frames is aprox a full games worth (including overtime at 30fps)
 		self.train_batchsize = (100 if DEBUG_QUICK else 500)
-		print("device")
+		print(device)
 		return
 
 	def cacheData(self):
