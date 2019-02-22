@@ -11,7 +11,7 @@ frame_file = 'gooddata0.pt'
 state_file = "./state.pt"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-workers = 4 #(4 if device == "cpu" else 0)
+workers = 0 #(4 if device == "cpu" else 0)
 writer = SummaryWriter()
 DEBUG_QUICK = False
 
